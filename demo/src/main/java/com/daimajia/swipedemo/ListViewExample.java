@@ -20,6 +20,8 @@ import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.util.Attributes;
 import com.daimajia.swipedemo.adapter.ListViewAdapter;
 
+import java.util.ArrayList;
+
 public class ListViewExample extends Activity {
 
     private ListView mListView;
@@ -41,19 +43,18 @@ public class ListViewExample extends Activity {
         /**
          * The following comment is the sample usage of ArraySwipeAdapter.
          */
-//        String[] adapterData = new String[]{"Activity", "Service", "Content Provider", "Intent", "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient",
-//                "DDMS", "Android Studio", "Fragment", "Loader", "Activity", "Service", "Content Provider", "Intent",
-//                "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient", "Activity", "Service", "Content Provider", "Intent",
-//                "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient"};
+        ArrayList<String> adapterData=new ArrayList<>();
+        adapterData.add("Activity"); adapterData.add("Service"); adapterData.add("Content Provider");
 //        mListView.setAdapter(new ArraySwipeAdapterSample<String>(this, R.layout.listview_item, R.id.position, adapterData));
 
-        mAdapter = new ListViewAdapter(this);
+        mAdapter = new ListViewAdapter(this,adapterData);
         mListView.setAdapter(mAdapter);
         mAdapter.setMode(Attributes.Mode.Single);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ((SwipeLayout)(mListView.getChildAt(position - mListView.getFirstVisiblePosition()))).open(true);
+                Toast.makeText(ListViewExample.this, ""+mListView.getChildAt(position - mListView.getFirstVisiblePosition()),Toast.LENGTH_SHORT).show();
+                //((SwipeLayout)(mListView.getChildAt(position - mListView.getFirstVisiblePosition()))).open(true);
             }
         });
         mListView.setOnTouchListener(new View.OnTouchListener() {

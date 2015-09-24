@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,12 +15,16 @@ import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 import com.daimajia.swipedemo.R;
 
+import java.util.ArrayList;
+
 public class ListViewAdapter extends BaseSwipeAdapter {
 
     private Context mContext;
+    private ArrayList<String> data;
 
-    public ListViewAdapter(Context mContext) {
+    public ListViewAdapter(Context mContext,ArrayList<String> data) {
         this.mContext = mContext;
+        this.data=data;
     }
 
     @Override
@@ -28,39 +33,59 @@ public class ListViewAdapter extends BaseSwipeAdapter {
     }
 
     @Override
-    public View generateView(int position, ViewGroup parent) {
+    public View generateView(final int position, ViewGroup parent) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.listview_item, null);
+
         SwipeLayout swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
+        final ImageView fav=(ImageView)v.findViewById(R.id.fav);
+        final ImageView note=(ImageView)v.findViewById(R.id.note);
+        final ImageView visit=(ImageView)v.findViewById(R.id.visit);
+        final ImageView map=(ImageView)v.findViewById(R.id.map);
+
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
             public void onOpen(SwipeLayout layout) {
-                YoYo.with(Techniques.Tada).duration(500).delay(100).playOn(layout.findViewById(R.id.trash));
+                YoYo.with(Techniques.Flash).duration(500).delay(100).playOn(fav);
+                YoYo.with(Techniques.Flash).duration(500).delay(100).playOn(note);
+                YoYo.with(Techniques.Flash).duration(500).delay(100).playOn(visit);
+                YoYo.with(Techniques.Flash).duration(500).delay(100).playOn(map);
             }
         });
-        swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
-            @Override
-            public void onDoubleClick(SwipeLayout layout, boolean surface) {
-                Toast.makeText(mContext, "DoubleClick", Toast.LENGTH_SHORT).show();
-            }
-        });
-        v.findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
+        fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "click delete", Toast.LENGTH_SHORT).show();
+                fav.setSelected( !fav.isSelected());
+                data.remove(position);
+                notifyDataSetChanged();
             }
         });
+        note.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                note.setSelected(!note.isSelected());
+            }
+        });
+        visit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                visit.setSelected(!visit.isSelected());
+            }
+        });
+        fav.setSelected(false);
+        note.setSelected(false);
+        visit.setSelected(false);
         return v;
     }
 
     @Override
     public void fillValues(int position, View convertView) {
         TextView t = (TextView)convertView.findViewById(R.id.position);
-        t.setText((position + 1) + ".");
+        t.setText(data.get(position));
     }
 
     @Override
     public int getCount() {
-        return 50;
+        return data.size();
     }
 
     @Override

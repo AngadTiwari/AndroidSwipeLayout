@@ -3,20 +3,49 @@
     xmlns:swipe="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipe"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     swipe:leftEdgeSwipeOffset="0dp"
     swipe:rightEdgeSwipeOffset="0dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:background="#FF5534"
+        android:orientation="horizontal"
         android:gravity="center"
         android:tag="Bottom3"
         android:weightSum="10">
 
         <ImageView
+            android:id="@+id/fav"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/fav_tab_selector"
+            android:layout_marginLeft="10dp"/>
+
+        <ImageView
+            android:id="@+id/note"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/note_tab_selector"
+            android:layout_marginLeft="10dp"/>
+
+        <ImageView
+            android:id="@+id/visit"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/visit_tab_selector"
+            android:layout_marginLeft="10dp"/>
+
+        <ImageView
+            android:id="@+id/map"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/map_tab_active"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+        <!--<ImageView
             android:id="@+id/trash"
             android:layout_width="27dp"
             android:layout_height="30dp"
@@ -38,7 +67,7 @@
             android:layout_weight="4"
             android:background="@drawable/white"
             android:text="Yes,Delete"
-            android:textColor="#FF5534" />
+            android:textColor="#FF5534" />-->
     </LinearLayout>
 
     <LinearLayout
@@ -52,11 +81,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <TextView
+        <!--<TextView
             android:id="@+id/text_data"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:tag="Hover"
-            android:text="Do not, for one repulse, forgo the purpose that you resolved to effort. " />
+            android:text="Do not, for one repulse, forgo the purpose that you resolved to effort. " />-->
     </LinearLayout>
 </com.daimajia.swipe.SwipeLayout>

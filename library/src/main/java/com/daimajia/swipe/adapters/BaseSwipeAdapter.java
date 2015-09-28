@@ -32,7 +32,7 @@ public abstract class BaseSwipeAdapter extends BaseAdapter implements SwipeItemM
      * @param parent
      * @return
      */
-    public abstract View generateView(int position, ViewGroup parent);
+    public abstract View generateView(int position, View converView, ViewGroup parent);
 
     /**
      * fill values or bind listeners to the view.
@@ -49,13 +49,10 @@ public abstract class BaseSwipeAdapter extends BaseAdapter implements SwipeItemM
 
     @Override
     public final View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
-        if(v == null){
-            v = generateView(position, parent);
-        }
-        mItemManger.bind(v, position);
-        fillValues(position, v);
-        return v;
+        convertView = generateView(position, convertView, parent);
+        mItemManger.bind(convertView, position);
+        fillValues(position, convertView);
+        return convertView;
     }
 
     @Override

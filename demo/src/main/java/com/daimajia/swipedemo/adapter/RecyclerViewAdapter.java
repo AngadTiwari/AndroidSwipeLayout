@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,25 +23,40 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends RecyclerSwipeAdapter<RecyclerViewAdapter.SimpleViewHolder> {
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
-        SwipeLayout swipeLayout;
+        /*SwipeLayout swipeLayout;
         TextView textViewPos;
         TextView textViewData;
-        Button buttonDelete;
+        Button buttonDelete;*/
 
-        public SimpleViewHolder(View itemView) {
-            super(itemView);
-            swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe);
+        TextView dataview;
+        ImageView fav,note,visit;
+        ImageView favsmall,notesmall,visitsmall;
+
+        public SimpleViewHolder(View inflatedView) {
+            super(inflatedView);
+            /*swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe);
             textViewPos = (TextView) itemView.findViewById(R.id.position);
             textViewData = (TextView) itemView.findViewById(R.id.text_data);
-            buttonDelete = (Button) itemView.findViewById(R.id.delete);
+            buttonDelete = (Button) itemView.findViewById(R.id.delete);*/
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            dataview=(TextView)inflatedView.findViewById(R.id.position);
+
+            //SwipeLayout swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
+            fav=(ImageView)inflatedView.findViewById(R.id.fav);
+            note=(ImageView)inflatedView.findViewById(R.id.note);
+            visit=(ImageView)inflatedView.findViewById(R.id.visit);
+
+            favsmall=(ImageView)inflatedView.findViewById(R.id.favsmall);
+            notesmall=(ImageView)inflatedView.findViewById(R.id.notesmall);
+            visitsmall=(ImageView)inflatedView.findViewById(R.id.visitsmall);
+
+            /*itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d(getClass().getSimpleName(), "onItemSelected: " + textViewData.getText().toString());
-                    Toast.makeText(view.getContext(), "onItemSelected: " + textViewData.getText().toString(), Toast.LENGTH_SHORT).show();
+                    *//*Log.d(getClass().getSimpleName(), "onItemSelected: " + textViewData.getText().toString());
+                    Toast.makeText(view.getContext(), "onItemSelected: " + textViewData.getText().toString(), Toast.LENGTH_SHORT).show();*//*
                 }
-            });
+            });*/
         }
     }
 
@@ -56,14 +72,16 @@ public class RecyclerViewAdapter extends RecyclerSwipeAdapter<RecyclerViewAdapte
 
     @Override
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item, parent, false);
-        return new SimpleViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item, null);
+        SimpleViewHolder simpleViewHolder=new SimpleViewHolder(view);
+        view.setTag(simpleViewHolder);
+        return simpleViewHolder;
     }
 
     @Override
     public void onBindViewHolder(final SimpleViewHolder viewHolder, final int position) {
         String item = mDataset.get(position);
-        viewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
+        /*viewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
         viewHolder.swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
             public void onOpen(SwipeLayout layout) {
@@ -88,7 +106,43 @@ public class RecyclerViewAdapter extends RecyclerSwipeAdapter<RecyclerViewAdapte
             }
         });
         viewHolder.textViewPos.setText((position + 1) + ".");
-        viewHolder.textViewData.setText(item);
+        viewHolder.textViewData.setText(item);*/
+
+        viewHolder.fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean selection = viewHolder.fav.isSelected();
+                viewHolder.fav.setSelected(!selection);
+                if(selection==true)
+                    viewHolder.favsmall.setVisibility(View.GONE);
+                else
+                    viewHolder.favsmall.setVisibility(View.VISIBLE);
+            }
+        });
+        viewHolder.note.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean selection = viewHolder.note.isSelected();
+                viewHolder.note.setSelected(!selection);
+                if (selection == true)
+                    viewHolder.notesmall.setVisibility(View.GONE);
+                else
+                    viewHolder.notesmall.setVisibility(View.VISIBLE);
+            }
+        });
+        viewHolder.visit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean selection = viewHolder.visit.isSelected();
+                viewHolder.visit.setSelected(!selection);
+                if (selection == true)
+                    viewHolder.visitsmall.setVisibility(View.GONE);
+                else
+                    viewHolder.visitsmall.setVisibility(View.VISIBLE);
+            }
+        });
+
+        viewHolder.dataview.setText(item);
         mItemManger.bind(viewHolder.itemView, position);
     }
 

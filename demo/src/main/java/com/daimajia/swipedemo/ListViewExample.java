@@ -43,17 +43,34 @@ public class ListViewExample extends Activity {
         /**
          * The following comment is the sample usage of ArraySwipeAdapter.
          */
-        ArrayList<String> adapterData=new ArrayList<>();
-        adapterData.add("Activity"); adapterData.add("Service"); adapterData.add("Content Provider");
+        ArrayList<Model> adapterData=new ArrayList<>();
+        for(int i=0;i<20;i++)
+        {
+            Model model=new Model();
+            model.setText("position " + i);
+            if(i==0 || i==11)
+            {
+                model.setIsSelection1(true);
+                model.setIsSelection2(true);
+                model.setIsSelection3(true);
+            }
+            else
+            {
+                model.setIsSelection1(false);
+                model.setIsSelection2(false);
+                model.setIsSelection3(false);
+            }
+            adapterData.add(i,model);
+        }
 //        mListView.setAdapter(new ArraySwipeAdapterSample<String>(this, R.layout.listview_item, R.id.position, adapterData));
 
         mAdapter = new ListViewAdapter(this,adapterData);
         mListView.setAdapter(mAdapter);
         mAdapter.setMode(Attributes.Mode.Single);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ListViewExample.this, ""+mListView.getChildAt(position - mListView.getFirstVisiblePosition()),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ListViewExample.this, ""+mListView.getChildAt(position - mListView.getFirstVisiblePosition()),Toast.LENGTH_SHORT).show();
                 //((SwipeLayout)(mListView.getChildAt(position - mListView.getFirstVisiblePosition()))).open(true);
             }
         });
@@ -67,7 +84,7 @@ public class ListViewExample extends Activity {
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(mContext, "OnItemLongClickListener", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "OnItemLongClickListener", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
@@ -93,7 +110,7 @@ public class ListViewExample extends Activity {
             public void onNothingSelected(AdapterView<?> parent) {
                 Log.e("ListView", "onNothingSelected:");
             }
-        });
+        });*/
 
     }
 
